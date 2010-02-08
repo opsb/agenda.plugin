@@ -5,20 +5,27 @@ $.widget("ui.agenda", {
 	},
 
 	_render : function() {
-		this._renderGrid();		
+		this._renderGrid();
+		this._resizeGrid();
 		this._renderEvents();
 		this._addCalendarInformationToGrid();
 	},
 	
 	_renderGrid : function() {
+		grid = $(new EJS({url: 'grid.ejs'}).render(this.options));
 		this.element.html(
-			new EJS({url: 'template.ejs'}).render(this.options)
+			grid
 		);
 	},
 	
+	_resizeGrid : function() {
+		this.element.find('td').css("height", this.options.periodHeight);
+	},
+	
 	_renderEvents : function() {
+		self = this;
 		$(this.options.events()).each(function(event) {
-			console.log(event);
+			self.element.append(new EJS({url: 'event.ejs'}).render(event));
 		});
 	},
 	
@@ -49,11 +56,12 @@ $.extend($.ui.agenda, {
   getter : "data options",
 
   defaults: {
-		days: 			3,
-		columns: 		4,
-		startHour: 	9,
-		endHour: 		17,
-		events: 		function() { return [] }
+		days: 				3,
+		columns: 			4,
+		startHour: 		9,
+		endHour: 			17,
+		periodHeight: 10,
+		events: 			function() { return [] }
   }
 
 });

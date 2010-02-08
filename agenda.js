@@ -9,8 +9,16 @@ $.widget("ui.agenda", {
 	},
 
 	_render : function() {
-		var template = new EJS({url: 'template.ejs'});
-		this.element.html(template.render(this));
+		
+		this.element.html(
+			new EJS({url: 'template.ejs'}).render({
+				days: 			3,
+				columns: 		4,
+				startHour: 	9,
+				endHour: 		17
+			})
+		);
+		
 	}
 
 });

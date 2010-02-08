@@ -11,7 +11,7 @@ $.widget("ui.agenda", {
 	},
 	
 	_renderGrid : function() {
-		grid = $(new EJS({url: 'grid.ejs'}).render(this.options));
+		var grid = $(new EJS({url: 'grid.ejs'}).render(this.options));
 		grid.find('td').css("height", this.options.periodHeight);
 		this.element.append(grid);
 	},

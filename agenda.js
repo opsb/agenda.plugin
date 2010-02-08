@@ -1,11 +1,25 @@
 $.widget("ui.agenda", {
 
 	_init : function() {
-		console.log("initialized agenda");
+		this._render();
 	},
 
 	message : function() {
 		return this.options.message;
+	},
+	
+	_render : function() {
+		definition = 
+			"<table>\
+				<tbody>\
+					<tr>\
+						<td>one</td>\
+						<td>two</td>\
+					</tr>\
+				</tbody>\
+			</table>";
+		
+		$(definition).appendTo(this.element);
 	}
 
 });

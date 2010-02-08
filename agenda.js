@@ -6,20 +6,14 @@ $.widget("ui.agenda", {
 
 	_render : function() {
 		this._renderGrid();
-		this._resizeGrid();
 		this._renderEvents();
 		this._addCalendarInformationToGrid();
 	},
 	
 	_renderGrid : function() {
 		grid = $(new EJS({url: 'grid.ejs'}).render(this.options));
-		this.element.html(
-			grid
-		);
-	},
-	
-	_resizeGrid : function() {
-		this.element.find('td').css("height", this.options.periodHeight);
+		grid.find('td').css("height", this.options.periodHeight);
+		this.element.append(grid);
 	},
 	
 	_renderEvents : function() {

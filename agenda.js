@@ -6,6 +6,7 @@ $.widget("ui.agenda", {
 
 	_render : function() {
 		this._renderGrid();		
+		this._renderEvents();
 		this._addCalendarInformationToGrid();
 	},
 	
@@ -13,6 +14,12 @@ $.widget("ui.agenda", {
 		this.element.html(
 			new EJS({url: 'template.ejs'}).render(this.options)
 		);
+	},
+	
+	_renderEvents : function() {
+		$(this.options.events()).each(function(event) {
+			console.log(event);
+		});
 	},
 	
 	_addCalendarInformationToGrid : function() {
@@ -45,7 +52,8 @@ $.extend($.ui.agenda, {
 		days: 			3,
 		columns: 		4,
 		startHour: 	9,
-		endHour: 		17
+		endHour: 		17,
+		events: 		function(){ return [] }
   }
 
 });

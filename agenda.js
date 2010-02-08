@@ -5,19 +5,18 @@ $.widget("ui.agenda", {
 	},
 
 	_render : function() {
-		this._renderHtml();
-		this._addPositionInformationToTableCells();
+		this._renderGrid();		
+		this._addCalendarInformationToGrid();
 	},
 	
-	_renderHtml : function(options) {
+	_renderGrid : function() {
 		this.element.html(
 			new EJS({url: 'template.ejs'}).render(this.options)
 		);
 	},
 	
-	_addPositionInformationToTableCells : function() {
+	_addCalendarInformationToGrid : function() {
 		var rows = this.element.find('table tbody tr')
-		
 		var rowIndex = 0;
 		var columnIndex = 0;
 		for( var day = 1; day <= this.options['days']; day++ ) {

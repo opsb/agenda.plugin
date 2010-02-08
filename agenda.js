@@ -53,7 +53,7 @@ $.extend($.ui.agenda, {
 		columns: 		4,
 		startHour: 	9,
 		endHour: 		17,
-		events: 		function(){ return [] }
+		events: 		function() { return [] }
   }
 
 });

@@ -7,26 +7,17 @@ $.widget("ui.agenda", {
 	message : function() {
 		return this.options.message;
 	},
-	
+
 	_render : function() {
-		definition = 
-			"<table>\
-				<tbody>\
-					<tr>\
-						<td>one</td>\
-						<td>two</td>\
-					</tr>\
-				</tbody>\
-			</table>";
-		
-		$(definition).appendTo(this.element);
+		var template = new EJS({url: 'template.ejs'});
+		this.element.html(template.render(this));
 	}
 
 });
 
 $.extend($.ui.agenda, {
 
-  getter: "message",
+  getter : "message",
 
   defaults: {
     message: "hello!"

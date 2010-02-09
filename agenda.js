@@ -42,12 +42,18 @@ $.widget("ui.agenda", {
 	
 	_renderEvents : function() {
 		self = this;
-		$(this.options.events()).each(function(event) {
+		$(this.options.events()).each(function(index, event) {
+			console.log(event);
 			var eventElement = $(new EJS({url: 'event.ejs'}).render(event));
+			
 			eventElement.data("day", event.day			  );
 			eventElement.data("column", event.column  );
 			eventElement.data("hour", event.startHour );
-			self.element.append(event);
+			eventElement.css("position", "absolute");
+			eventElement.css("top", self.options.periodHeight * event.day);
+			eventElement.css("left", 300 * event.column);
+			eventElement.show();
+			self.element.append(eventElement);
 		});
 	},
 

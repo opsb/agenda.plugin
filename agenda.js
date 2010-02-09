@@ -1,6 +1,9 @@
-Element.prototype.add = function(elementName) {
+Element.prototype.add = function(elementName, attrs) {
   var element = document.createElement(elementName);
   this.appendChild(element);
+	for(var key in attrs) {
+		element.setAttribute(key, attrs[key]);
+	}
   return element;
 };
 
@@ -15,10 +18,9 @@ $.widget("ui.agenda", {
 		this._renderEvents();
 	},
 	
-	_renderGrid : function() {	
-
-		var table = this.element.add("table");
-		table.css("width","100%");		
+	_renderGrid : function() {
+		
+		var table = this.element[0].add("table", {style: "width:100%;background:blue;"});
 		var tbody = table.add("tbody");
 		
 		for( var day = 1; day <= this.options.days; day++ ) {	

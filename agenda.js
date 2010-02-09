@@ -7,41 +7,49 @@ $.widget("ui.agenda", {
 	_render : function() {
 		this._renderGrid();
 		this._renderEvents();
-		this._addCalendarInformationToGrid();
 	},
 	
-	_renderGrid : function() {
-		var grid = $(new EJS({url: 'grid.ejs'}).render(this.options));
-		grid.find('td').css("height", this.options.periodHeight);
-		this.element.append(grid);
+	_renderGrid : function() {	
+
+		var table = $(document.createElement("table"));
+		table.css("width","100%");
+		table.show();
+		this.element.append(table);
+		
+		var tbody = $(document.createElement("tbody"));
+		table.append(tbody);
+		
+		var tr = $(document.createElement("tr"));
+		tbody.append(tr);
+		
+		for( var day = 1; day <= this.options.days; day++ ) {	
+			for( var hour = this.options.startHour; hour <= this.options.endHour; hour++ ) {
+				var row = $(document.createElement("tr"));
+				tbody.append(row);
+				for( var column = 1; column <= this.options.columns; column++ ) {
+					var cell = $(document.createElement("td"));
+					row.append(cell);
+					cell.data("day", 		day);
+					cell.data("column", column);
+					cell.data("hour",		hour);
+					cell.css("height",	this.options.periodHeight);
+					row.append(cell);
+				}
+			}
+		}
+
 	},
 	
 	_renderEvents : function() {
 		self = this;
 		$(this.options.events()).each(function(event) {
-			self.element.append(new EJS({url: 'event.ejs'}).render(event));
+			var eventElement = $(new EJS({url: 'event.ejs'}).render(event));
+			eventElement.data("day", event.day			  );
+			eventElement.data("column", event.column  );
+			eventElement.data("hour", event.startHour );
+			self.element.append(event);
 		});
 	},
-	
-	_addCalendarInformationToGrid : function() {
-		var rows = this.element.find('table tbody tr')
-		var rowIndex = 0;
-		var columnIndex = 0;
-		for( var day = 1; day <= this.options['days']; day++ ) {
-			for( var hour = this.options['startHour']; hour <= this.options['endHour']; hour++ ) {
-				var row	= rows.get(rowIndex);
-				for( var column = 1; column <= this.options['columns']; column++ ) {
-					var cell = $(row.cells[columnIndex]);
-					cell.data("day", 		day);
-					cell.data("column", column);
-					cell.data("hour", 	hour);
-					columnIndex++;
-				}
-				columnIndex = 0;
-				rowIndex++;
-			}
-		}
-	}
 
 });
 

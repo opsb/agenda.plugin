@@ -20,7 +20,10 @@ $.widget("ui.agenda", {
 	
 	_renderGrid : function() {
 		
-		var table = this.element[0].add("table", {style: "width:100%;background:blue;"});
+		var table = document.createElement("table");
+		$(table).css('width', '100%')
+						.css('background', 'blue');
+						
 		var tbody = table.add("tbody");
 		
 		for( var day = 1; day <= this.options.days; day++ ) {	
@@ -35,6 +38,8 @@ $.widget("ui.agenda", {
 				}
 			}
 		}
+
+		this.element.append(table);
 
 	},
 	
